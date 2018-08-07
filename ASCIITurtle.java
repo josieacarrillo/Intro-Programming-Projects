@@ -86,12 +86,15 @@ public class ASCIITurtle
 
         this.setSymbol('|');
         this.draw(1);
-        this.makeSpace(15);
+        //this.makeSpace(15);
+        this.makeSpace((40-length)/2);
 
         this.setSymbol(symbolToUse);
 
         this.draw(length);
-        this.makeSpace(15);
+      //  this.makeSpace(15);
+      this.makeSpace((40-length)/2);
+
         this.setSymbol('|');
         this.draw(1);
         this.newline();
