@@ -45,7 +45,40 @@ public class RandomTurtleTester {
 
 
        int deltaX4 = turtle4.takeNSteps(2, random4);
-       System.out.println("Turtle 1 took 2 steps and ended in position" + deltaX4);
+       System.out.println("Turtle 4 took 2 steps and ended in position" + deltaX4);
+
+       //test countSteps method
+
+
+       World world3 = new World();
+
+       Turtle bob = new Turtle(world3);
+
+
+       int maxD1 = bob.countSteps(5,random1);
+       System.out.println("Turtle bob took"+ maxD1 + "steps before reaching max displacement 5");
+
+        //new turtle
+       Turtle msKeisha = new Turtle(world3);
+
+       int maxD2 = msKeisha.countSteps(2,random1);
+       System.out.println("Turtle msKeisha took" + maxD2 + "steps before reaching max displacement 2");
+
+
+       //new turtle
+        Turtle wolfie = new Turtle(world3);
+
+        int maxD3 = wolfie.countSteps(3, random1);
+        System.out.println("Turtle wolfie took" + maxD3 + "steps before reaching max displacement 3");
+
+
+        //new turtle
+       Turtle dwight = new Turtle(world3);
+
+       int maxD4 = dwight.countSteps(4, random1);
+       System.out.println("Turtle dwight took" + maxD4 + "steps before reaching max displacement 4");
+
+
 
 
 
