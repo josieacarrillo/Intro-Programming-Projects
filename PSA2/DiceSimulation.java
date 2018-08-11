@@ -46,7 +46,7 @@ public class DiceSimulation{
 		int sum = 0;
 		int rolls = 0;
 
-		while (sum <= target){
+		while (sum < target){
 
 			int value1 = rand.nextInt(6);
 			value1 = value1 + 1;
