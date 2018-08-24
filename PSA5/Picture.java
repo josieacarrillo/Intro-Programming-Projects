@@ -222,7 +222,19 @@ public class Picture extends SimplePicture
     */
     public void copyTo(Picture target, int startX, int startY)
     {
+      for( int x = startX, targetX = x + startX; x < this.getWidth; x++ ){
+        for(int y = startY, targetY = y+startY; y< this.getHeight; y++){
+            Pixel sourcePixel = this.getPixel(x,y);
+            Pixel targetPixel = targetPixel.getPixel(targetX,targetY);
+            int sourceRed = sourcePixel.getRed();
+            int sourceGreen = sourcePixel.getGreen();
+            int sourceBlue = sourcePixel.getBlue();
+            targetPixel.setRed(sourceRed);
+            targetPixel.setGreen(sourceGreen);
+            targetPixel.setBlue(sourceBlue);
+        }
 
+      }
     }
 
     /**
@@ -230,7 +242,8 @@ public class Picture extends SimplePicture
     */
     public void flipHorizontalInto(Picture source, int startX, int startY)
     {
-
+      this.flipHorizontalRectangle();
+      this.copyTo();
     }
 
     /**
@@ -238,7 +251,8 @@ public class Picture extends SimplePicture
     */
     public void flipVerticalInto(Picture source, int startX, int startY)
     {
-
+      this.flipVerticalRectangle()
+      this.copyTo();
     }
 
     /**
@@ -246,6 +260,21 @@ public class Picture extends SimplePicture
     */
     public void copyAbove(int x, int y, int width, int height, int gap)
     {
+      int moveY = height +gap;
+      for(int newX= x; newX< width; newX++){
+        for(int newY = y - moveY; newY< newY + height; newY++){
+          Pixel sourcePixel = this.getPixel(x,y);
+          Pixel targetPixel = targetPixel.getPixel(newX,newY);
+          int sourceRed = sourcePixel.getRed();
+          int sourceGreen = sourcePixel.getGreen();
+          int sourceBlue = sourcePixel.getBlue();
+
+          targetPixel.setRed(sourceRed);
+          targetPixel.setGreen(sourceGreen);
+          targetPixel.setBlue(sourceBlue);
+          
+        }
+      }
 
     }
 
@@ -257,5 +286,88 @@ public class Picture extends SimplePicture
 
     }
 
+    public void averageRed(int start, int end) {
+
+          int rTotal = 0;
+
+          Pixel [] pixelArray = this.getPixels();
+
+
+        for ( int i = start; i < end+1; i++)
+        {
+          rTotal += pixelArray[i].getRed();
+
+          }
+          rTotal = (int)(rTotal/(end+1) -start);
+
+          for (int i = start; i < end+1; i++)
+           {
+            pixelArray[i].setRed(rTotal);
+          }
+    }
+
+    public int putInColorRange(int value)
+    {
+        value = Math.max(value, 0);  // get the max of 0 and the value
+        value = Math.min(value, 255);  // get the min of value and 255
+        return value;
+    }
+
+
+    public void multiScale(double scale)
+    {
+        Pixel [] pixelArray = this.getPixels();
+
+
+
+          for (int index = 0; index < pixelArray.length; index ++)
+          {
+            //create variable
+            int rValue = 0;
+            int gValue = 0;
+            int bValue = 0;
+            int scaled = 0;
+            //generate RGB values from pixel
+            rValue = pixelArray[index].getRed();
+            gValue = pixelArray[index].getGreen();
+            bValue = pixelArray[index].getBlue();
+
+            //scale Red value and make sure doesnt go out of bound
+            scaled = this.putInColorRange((int)(scale*rValue));
+            //update the Red value for the pixel
+            pixelArray[index].setRed(scaled);
+
+            //scale Green by time 2 and make sure doesnt go out of bound
+            scaled = this.putInColorRange((int)(scale*gValue*2));
+            //update the Green value for pixelArray
+            pixelArray[index].setGreen(scaled);
+
+            //scale Blue by half of the scale and make sure doesnt go out of bound
+
+            scaled = this.putInColorRange((int)(scale*bValue)/2);
+            pixelArray[index].setBlue(scaled);
+
+
+
+          }
+    }
+
+    public void blueScale()
+    {
+        Pixel [] pixelArray = this.getPixels();
+        int scaledToZero = 0;
+
+        for (int index = 0; index < pixelArray.length; index++)
+        {
+          //set R value to 0
+          scaledToZero = pixelArray[index].getRed();
+          scaledToZero = (int)(scaledToZero*0);
+          pixelArray[index].setRed(scaledToZero);
+          //set G value to 0
+          scaledToZero = pixelArray[index].getGreen();
+          scaledToZero = (int)(scaledToZero*0);
+          pixelArray[index].setGreen(scaledToZero);
+        }
+    }
 
 } // this } is the end of class Picture, put all new methods before this
