@@ -222,16 +222,23 @@ public class Picture extends SimplePicture
     */
     public void copyTo(Picture target, int startX, int startY)
     {
-      for( int x = startX, targetX = x + startX; x < this.getWidth; x++ ){
-        for(int y = startY, targetY = y+startY; y< this.getHeight; y++){
+      for( int x = 0; x < this.getWidth() && x+ startX< target.getWidth(); x++ ){
+        for(int y = 0; y< this.getHeight()&& y+startY< target.getHeight(); y++){
+          int targetX = x + startX;
+          int targetY = y+startY;
             Pixel sourcePixel = this.getPixel(x,y);
-            Pixel targetPixel = targetPixel.getPixel(targetX,targetY);
+
+            Pixel targetPixel = target.getPixel(targetX,targetY);
+            //System.out.println("x= " + x + "y ="+ y);
+          //  System.out.println("targetX="+ targetX+ "targetY=" + targetY);
             int sourceRed = sourcePixel.getRed();
             int sourceGreen = sourcePixel.getGreen();
             int sourceBlue = sourcePixel.getBlue();
             targetPixel.setRed(sourceRed);
             targetPixel.setGreen(sourceGreen);
             targetPixel.setBlue(sourceBlue);
+          // System.out.println("x= " + x + "y ="+ y);
+            //System.out.println("targetX="+ targetX+ "targetY=" + targetY);
         }
 
       }
@@ -240,19 +247,33 @@ public class Picture extends SimplePicture
     /**
     *  TODO: Add header comments and complete this method.  (See writeup)
     */
-    public void flipHorizontalInto(Picture source, int startX, int startY)
+    public void flipHorizontalInto(Picture canvas, int startX, int startY)
     {
-      this.flipHorizontalRectangle();
-      this.copyTo();
+      int right = Math.min(canvas.getWidth(), startX+ this.getWidth());
+      int newWidth = right - startX;
+
+      int bottom = Math.min(canvas.getHeight(), startY + this.getHeight());
+      int newHeight = bottom - startY;
+
+        this.copyTo(canvas,startX,startY);
+      canvas.flipHorizontalRectangle(startX,startY,newWidth,newHeight);
+
     }
 
     /**
     *  TODO: Add header comments and complete this method.  (See writeup)
     */
-    public void flipVerticalInto(Picture source, int startX, int startY)
+    public void flipVerticalInto(Picture canvas, int startX, int startY)
     {
-      this.flipVerticalRectangle()
-      this.copyTo();
+      int right = Math.min(canvas.getWidth(), startX+ this.getWidth());
+      int newWidth = right - startX;
+
+      int bottom = Math.min(canvas.getHeight(), startY + this.getHeight());
+      int newHeight = bottom - startY;
+
+        this.copyTo(canvas,startX,startY);
+      canvas.flipVerticalRectangle(startX,startY,newWidth,newHeight);
+
     }
 
     /**
@@ -260,21 +281,33 @@ public class Picture extends SimplePicture
     */
     public void copyAbove(int x, int y, int width, int height, int gap)
     {
-      int moveY = height +gap;
-      for(int newX= x; newX< width; newX++){
-        for(int newY = y - moveY; newY< newY + height; newY++){
-          Pixel sourcePixel = this.getPixel(x,y);
-          Pixel targetPixel = targetPixel.getPixel(newX,newY);
-          int sourceRed = sourcePixel.getRed();
-          int sourceGreen = sourcePixel.getGreen();
-          int sourceBlue = sourcePixel.getBlue();
 
-          targetPixel.setRed(sourceRed);
-          targetPixel.setGreen(sourceGreen);
-          targetPixel.setBlue(sourceBlue);
-          
+
+        Pixel [][] buffer = new Pixel[height][width];
+      for(int j =0; j < buffer.length; j++){
+        for(int i =0; i < buffer[j].length; i++){
+          Pixel sourcePixel = this.getPixel(x+i, y+j);
+          buffer[j][i] = sourcePixel;
         }
       }
+
+
+        int sourceX = x;
+        int sourceY = gap + height;
+
+        for(int bufferY=0; bufferY < buffer.length; bufferY++){
+          for(int bufferX =0; bufferX < buffer[bufferY].length; bufferX++){
+            int tempRed = buffer[bufferY][bufferX].getRed();
+            int tempGreen = buffer[bufferY][bufferX].getGreen();
+            int tempBlue = buffer[bufferY][bufferX].getBlue();
+
+            Pixel targetPixel = this.getPixel(sourceX+bufferX, y-sourceY+bufferY);
+            targetPixel.setRed(tempRed);
+            targetPixel.setGreen(tempGreen);
+            targetPixel.setBlue(tempBlue);
+          }
+        }
+
 
     }
 
@@ -284,7 +317,43 @@ public class Picture extends SimplePicture
     public void copyRight(int x, int y, int width, int height, int gap)
     {
 
-    }
+        Pixel [][] buffer = new Pixel[height][width];
+        for (int j =0; j< buffer.length; j++){
+          for(int i=0; i< buffer[j].length; i++){
+            buffer[j][i] = this.getPixel(x+i, y+j);
+
+
+
+          }
+        }
+
+        // for (int j =0; j< buffer.length; j++){
+        //   for(int i =0; i< buffer[j].length; i++){
+        //       System.out.println(buffer[j][i]);
+        //     }
+        //   }
+
+
+
+          int sourceX = width + gap;
+          int sourceY = y;
+          for(int bufferY = 0; bufferY < buffer.length; bufferY++){
+            for(int bufferX = 0; bufferX < buffer[bufferY].length; bufferX++){
+              //buffer[y][x]= [startY][startX];
+            int tempRed = buffer[bufferY][bufferX].getRed();
+            int tempGreen = buffer[bufferY][bufferX].getGreen();
+            int tempBlue = buffer[bufferY][bufferX].getBlue();
+
+            Pixel targetPixel = this.getPixel(bufferX+sourceX+x,sourceY+bufferY);
+            targetPixel.setRed(tempRed);
+            targetPixel.setGreen(tempGreen);
+            targetPixel.setBlue(tempBlue);
+            }
+          }
+        }
+
+
+
 
     public void averageRed(int start, int end) {
 
