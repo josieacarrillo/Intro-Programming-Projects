@@ -19,10 +19,13 @@ public class Chromakey
         String fileName3 =  FileChooser.pickAFile();
         Picture shirt = new Picture(fileName3);
         //shirt.explore();
-        original.replaceAllColor(background,Color.green,20).explore();
-      Picture oG = new Picture(original.replaceAllColor(background,Color.green,20));
+        Color green = new Color(0,255,0);
 
-        oG.replaceOldColorInRange(shirt,original,Color.blue,10,10,20,20,25).explore();
+      Picture oG = original.replaceAllColor(background,green,200);
+      oG.explore();
+
+      Picture finalImage = oG.replaceOldColorInRange(shirt,original,Color.white,480,220,300,300,150);
+      finalImage.explore();
 
 
 
