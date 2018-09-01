@@ -96,10 +96,88 @@ public class Picture extends SimplePicture
         return output;
     }
 
+    public Picture replaceAllColor(Picture background,
+    Color replaceColor, double tolerance)
+    {
+        Picture copy = new Picture(this.getWidth(), this.getHeight());
+        for( int x = 0; x < this.getWidth(); x++){
+          for( int y=0; y < this.getHeight(); y++){
+            Pixel sourcePixel = this.getPixel(x,y);
+            int sourceRed = sourcePixel.getRed();
+            int sourceGreen = sourcePixel.getGreen();
+            int sourceBlue = sourcePixel.getBlue();
+            copy.getPixel(x,y).setRed(sourceRed);
+            copy.getPixel(x,y).setGreen(sourceGreen);
+            copy.getPixel(x,y).setBlue(sourceBlue);
+          }
+        }
+
+        for (int x=0; x < background.getWidth(); x++){
+          for (int y=0; y < background.getHeight(); y++){
+            Pixel backgroundPixel = background.getPixel(x,y);
+            int backgroundRed = backgroundPixel.getRed();
+            int backgroundGreen = backgroundPixel.getGreen();
+            int backgroundBlue = backgroundPixel.getBlue();
+
+    //double colorDistance = copy.getPixel(x,y).colorDistance(replaceColor);
+    //System.out.println("Color distance ="+ colorDistance);
+            if(copy.getPixel(x,y).colorDistance(replaceColor)< tolerance){
+
+              copy.getPixel(x,y).setRed(backgroundRed);
+              copy.getPixel(x,y).setGreen(backgroundGreen);
+              copy.getPixel(x,y).setBlue(backgroundBlue);
+            }
+          }
+        }
+        return copy;
+    }
 
     /**
     * Add your comments here
     */
+    public Picture replaceOldColorInRange(Picture shirt, Picture original,
+    Color replaceColor, int startX, int startY, int width, int height, double tolerance)
+    {
+      Picture copy = new Picture(this.getWidth(), this.getHeight());
+      for( int x = 0; x < this.getWidth(); x++){
+        for( int y=0; y < this.getHeight(); y++){
+          Pixel sourcePixel = this.getPixel(x,y);
+          int sourceRed = sourcePixel.getRed();
+          int sourceGreen = sourcePixel.getGreen();
+          int sourceBlue = sourcePixel.getBlue();
+          copy.getPixel(x,y).setRed(sourceRed);
+          copy.getPixel(x,y).setGreen(sourceGreen);
+          copy.getPixel(x,y).setBlue(sourceBlue);
+        }
+      }
+
+    for(int x = 0; x < original.getWidth(); x++){
+      for(int y = 0; y < original.getHeight(); y++){
+      Pixel originalPixel =  original.getPixel(x,y);
+
+
+      }
+      }
+      for(int j =0; j < height; j++){
+        for(int i =0; i < width; i++){
+          Pixel shirtPixel = shirt.getPixel(i, j);
+          int shirtRed = shirtPixel.getRed();
+          int shirtGreen = shirtPixel.getGreen();
+          int shirtBlue = shirtPixel.getBlue();
+
+          if(original.getPixel(startX+ i, startY + j).colorDistance(replaceColor)< tolerance){
+
+          copy.getPixel(startX +i , startY +j).setRed(shirtRed);
+          copy.getPixel(startX +i , startY +j).setGreen(shirtGreen);
+          copy.getPixel(startX +i , startY +j).setBlue(shirtBlue);
+            }
+     }
+
+    }
+    return copy;
+    }
+
+
     public void eraseColor(Color eraseColor, int tolerance)
     {
       //Picture s = new Picture();
@@ -127,35 +205,39 @@ public class Picture extends SimplePicture
     public Picture copyRegionIfModified(Picture original, Picture replace,
         int x, int y, int width, int height)
     {
-        Picture copy = new Picture(this.getWidth(),this.getHeight());
+        Picture copy = new Picture(x+width,y+height);
 
-        for(int startX = 0; startX < original.getWidth(); startX++){
-          for(int startY = 0; startY < original.getHeight(); startY++){
-          Pixel originalPixel = original.getPixel(startX,startY);
-          int originalRed = originalPixel.getRed();
-          int originalGreen = originalPixel.getGreen();
-          int originalBlue = originalPixel.getBlue();
-          Pixel sourcePixel = this.getPixel(startX,startY);
-          int sourceRed = sourcePixel.getRed();
-          int sourceGreen = sourcePixel.getGreen();
-          int sourceBlue = sourcePixel.getBlue();
-
-          copy.getPixel(startX,startY).setRed(sourceRed);
-          copy.getPixel(startX,startY).setGreen(sourceGreen);
-          copy.getPixel(startX,startY).setBlue(sourceBlue);
-
-          replace.getPixel(startX,startY);
+        for(int startX = x ; startX < x + width; startX++){
+          for(int startY = y ; startY < y + height; startY++){
+           original.getPixel(startX,startY);
 
 
-            if(copy.getPixel(x,y).getRed()!= original.getPixel(x,y).getRed() || copy.getPixel(x,y).getGreen()!= original.getPixel(x,y).getGreen() || copy.getPixel(x,y).getBlue()!= original.getPixel(x,y).getBlue()){
-              copy.getPixel(x,y).setRed(replaceRed);
-              copy.getPixel(x,y).setGreen(replaceGreen);
+           Pixel sourcePixel = this.getPixel(startX,startY);
 
-              copy.getPixel(x,y).setBlue(replaceBlue);
+           int sourceRed = sourcePixel.getRed();
+           int sourceGreen = sourcePixel.getGreen();
+           int sourceBlue = sourcePixel.getBlue();
+           Pixel copyPixel = copy.getPixel(startX,startY);
+           copyPixel.setRed(sourceRed);
+           copyPixel.setGreen(sourceGreen);
+           copyPixel.setBlue(sourceBlue);
 
-            } else {
+         replace.getPixel(startX,startY);
+         Pixel replacePixel = replace.getPixel(startX,startY);
+          int replaceRed = replacePixel.getRed();
+          int replaceGreen = replacePixel.getGreen();
+          int replaceBlue = replacePixel.getBlue();
 
-              copy.getPixel(x,y).setRed()
+
+
+            if(copy.getPixel(startX,startY).getRed()!= original.getPixel(startX,startY).getRed() || copy.getPixel(startX,startY).getGreen()!= original.getPixel(startX,startY).getGreen() || copy.getPixel(startX,startY).getBlue()!= original.getPixel(startX,startY).getBlue()){
+
+              copyPixel.setRed(replaceRed);
+
+              copyPixel.setGreen(replaceGreen);
+
+              copyPixel.setBlue(replaceBlue);
+
             }
           }
         }
