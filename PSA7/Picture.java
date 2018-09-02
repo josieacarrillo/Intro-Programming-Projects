@@ -118,15 +118,35 @@ public class Picture extends SimplePicture
 public Picture hideSecretMessage2Bits(Picture message)
 {
   Picture canvas = new Picture(this.getWidth(),this.getHeight());
-  for(int x = 0; x < this.getWidth(); x++){
-    for(int y = 0; y < this.getHeight(); y++){
+  for(int x = 0; x < this.getWidth() && x < message.getWidth(); x++){
+    for(int y = 0; y < this.getHeight() && y < message.getHeight(); y++){
       Pixel sourcePixel = this.getPixel(x,y);
+        Pixel messagePixel = message.getPixel(x,y);
       int sourceRed = sourcePixel.getRed();
+
       int sourceGreen = sourcePixel.getGreen();
       int sourceBlue = sourcePixel.getBlue();
-      canvas.getPixel(x,y).setRed(sourceRed);
-      canvas.getPixel(x,y).setBlue(sourceBlue);
-      canvas.getPixel(x,y).setGreen(sourceGreen);
+      int canvasRed = canvas.getPixel(x,y).setRed(sourceRed);
+      int messageRed = messagePixel.getRed();
+      int leastSignificant = canvasRed>>2<<2;
+      int mostSignificant = messageRed>>6
+
+      int canvasBlue = canvas.getPixel(x,y).setBlue(sourceBlue);
+      int messageBlue = messagePixel.getBlue();
+      int leastSignificant = canvasBlue>>2<<2;
+      int mostSignificant = messageBlue>>6;
+
+
+
+      int canvasGreen = canvas.getPixel(x,y).setGreen(sourceGreen);
+      int messageGreen = messagePixel.getGreen();
+      int leastSignificant = canvasGreen>>2<<2;
+      int mostSignificant = messageGreen>>6;
+      
+
+
+
+
     }
   }
 }
