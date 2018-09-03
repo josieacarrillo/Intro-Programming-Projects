@@ -126,29 +126,34 @@ public Picture hideSecretMessage2Bits(Picture message)
 
       int sourceGreen = sourcePixel.getGreen();
       int sourceBlue = sourcePixel.getBlue();
+
       int canvasRed = canvas.getPixel(x,y).setRed(sourceRed);
       int messageRed = messagePixel.getRed();
-      int leastSignificant = canvasRed>>2<<2;
-      int mostSignificant = messageRed>>6
+      canvasRed = canvasRed>>2<<2;
+      int mostSignificant = messageRed>>6;
+      mostSignificant|canvasGreen;
+
 
       int canvasBlue = canvas.getPixel(x,y).setBlue(sourceBlue);
       int messageBlue = messagePixel.getBlue();
-      int leastSignificant = canvasBlue>>2<<2;
+      canvasBlue = canvasBlue>>2<<2;
       int mostSignificant = messageBlue>>6;
+      mostSignificant|canvasBlue;
 
 
 
       int canvasGreen = canvas.getPixel(x,y).setGreen(sourceGreen);
       int messageGreen = messagePixel.getGreen();
-      int leastSignificant = canvasGreen>>2<<2;
+      canvasGreen = canvasGreen>>2<<2;
       int mostSignificant = messageGreen>>6;
-      
+      mostSignificant|canvasGreen;
 
 
 
 
     }
   }
+  return canvas;
 }
 
 /**
