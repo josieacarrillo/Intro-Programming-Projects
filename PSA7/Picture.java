@@ -122,31 +122,43 @@ public Picture hideSecretMessage2Bits(Picture message)
     for(int y = 0; y < this.getHeight() && y < message.getHeight(); y++){
       Pixel sourcePixel = this.getPixel(x,y);
         Pixel messagePixel = message.getPixel(x,y);
+        //grab Pixels colors from calling objects
       int sourceRed = sourcePixel.getRed();
-
       int sourceGreen = sourcePixel.getGreen();
       int sourceBlue = sourcePixel.getBlue();
 
-      int canvasRed = canvas.getPixel(x,y).setRed(sourceRed);
+      Pixel canvasPixel = canvas.getPixel(x,y);
+
+      canvasPixel.setRed(sourceRed);
+
       int messageRed = messagePixel.getRed();
-      canvasRed = canvasRed>>2<<2;
+    int  canvasRed = canvasPixel.getRed();
+     canvasRed = canvasRed>>2<<2;
       int mostSignificant = messageRed>>6;
-      mostSignificant|canvasGreen;
+      canvasRed = mostSignificant|canvasRed;
+      canvasPixel.setRed(canvasRed);
 
 
-      int canvasBlue = canvas.getPixel(x,y).setBlue(sourceBlue);
+
+    canvasPixel.setBlue(sourceBlue);
+
       int messageBlue = messagePixel.getBlue();
-      canvasBlue = canvasBlue>>2<<2;
-      int mostSignificant = messageBlue>>6;
-      mostSignificant|canvasBlue;
+      int canvasBlue = canvasPixel.getBlue();
+        canvasBlue = canvasBlue>>2<<2;
+       mostSignificant = messageBlue>>6;
+      canvasBlue = mostSignificant|canvasBlue;
+      canvasPixel.setBlue(canvasBlue);
 
 
 
-      int canvasGreen = canvas.getPixel(x,y).setGreen(sourceGreen);
+     canvasPixel.setGreen(sourceGreen);
+
       int messageGreen = messagePixel.getGreen();
-      canvasGreen = canvasGreen>>2<<2;
-      int mostSignificant = messageGreen>>6;
-      mostSignificant|canvasGreen;
+      int canvasGreen = canvasPixel.getGreen();
+       canvasGreen = canvasGreen>>2<<2;
+       mostSignificant = messageGreen>>6;
+      canvasGreen = mostSignificant|canvasGreen;
+     canvasPixel.setGreen(canvasGreen);
 
 
 
@@ -162,7 +174,7 @@ public Picture hideSecretMessage2Bits(Picture message)
 
 public Picture recoverSecretMessage2Bits( )
 {
-  //Implement this method
+return null;  
 }
 
 /**************  END OF PART 1 METHODS *********************/
