@@ -134,9 +134,11 @@ public Picture hideSecretMessage2Bits(Picture message)
       int messageRed = messagePixel.getRed();
     int  canvasRed = canvasPixel.getRed();
      canvasRed = canvasRed>>2<<2;
+
       int mostSignificant = messageRed>>6;
       canvasRed = mostSignificant|canvasRed;
       canvasPixel.setRed(canvasRed);
+
 
 
 
@@ -148,6 +150,8 @@ public Picture hideSecretMessage2Bits(Picture message)
        mostSignificant = messageBlue>>6;
       canvasBlue = mostSignificant|canvasBlue;
       canvasPixel.setBlue(canvasBlue);
+
+
 
 
 
@@ -163,6 +167,7 @@ public Picture hideSecretMessage2Bits(Picture message)
 
 
 
+
     }
   }
   return canvas;
@@ -174,7 +179,37 @@ public Picture hideSecretMessage2Bits(Picture message)
 
 public Picture recoverSecretMessage2Bits( )
 {
-return null;  
+  Picture result = new Picture(this.getWidth(),this.getHeight());
+
+  for(int x = 0; x < this.getWidth() && x < result.getWidth(); x++){
+    for (int y = 0; y < this.getHeight() && y < result.getHeight(); y++){
+      Pixel sourcePixel = this.getPixel(x,y);
+      Pixel resultPixel = result.getPixel(x,y);
+      //retrieve r value from the hidden picture
+      int sourceRed = sourcePixel.getRed();
+      int resultRed = resultPixel.getRed();
+      int leastSig = sourceRed<<6;
+      resultRed = leastSig&resultRed;
+      resultPixel.setRed(resultRed);
+
+      //retrieve g value from the hidden Picture
+
+      int sourceGreen = sourcePixel.getGreen();
+      int resultGreen = resultPixel.getGreen();
+      leastSig = sourceGreen<<6;
+      resultGreen = leastSig&resultGreen;
+      resultPixel.setGreen(resultGreen);
+
+      //retrieve b value from hidden picture
+
+      int sourceBlue = sourcePixel.getBlue();
+      int resultBlue = resultPixel.getBlue();
+      leastSig = sourceBlue<<6;
+      resultBlue = leastSig&resultBlue;
+      resultPixel.setBlue(resultBlue);
+    }
+  }
+return result;
 }
 
 /**************  END OF PART 1 METHODS *********************/
