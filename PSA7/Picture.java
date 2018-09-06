@@ -112,13 +112,17 @@ public class Picture extends SimplePicture
 /**************  PART 1 METHODS *********************/
 
 /**
-  *  TODO: Add header comments and complete this method.  (See writeup)
+//this method hides a picture( message) behind the calling object
   */
 
 public Picture hideSecretMessage2Bits(Picture message)
 {
   Picture canvas = new Picture(this.getWidth(),this.getHeight());
-  for(int x = 0; x < this.getWidth() && x < message.getWidth(); x++){
+   System.out.println("message width ="+ message.getWidth());
+    System.out.println("message height ="+ message.getHeight());
+    //the width is off when hiding message into an image with a different size 
+  for(int x = 0; x < this.getWidth() && x < message.getWidth()-1; x++){
+
     for(int y = 0; y < this.getHeight() && y < message.getHeight(); y++){
       Pixel sourcePixel = this.getPixel(x,y);
         Pixel messagePixel = message.getPixel(x,y);
@@ -138,7 +142,6 @@ public Picture hideSecretMessage2Bits(Picture message)
       int mostSignificant = messageRed>>6;
       canvasRed = mostSignificant|canvasRed;
       canvasPixel.setRed(canvasRed);
-
 
 
 
@@ -171,6 +174,7 @@ public Picture hideSecretMessage2Bits(Picture message)
     }
   }
   return canvas;
+
 }
 
 /**
@@ -210,6 +214,7 @@ public Picture recoverSecretMessage2Bits( )
     }
   }
 return result;
+
 }
 
 /**************  END OF PART 1 METHODS *********************/
