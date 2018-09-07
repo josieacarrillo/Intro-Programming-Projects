@@ -127,8 +127,8 @@ public class Picture extends SimplePicture
     */
   public static int mostSignificantN( int num, int N )
   {
-    int shift = 8-N;
-    int newNumber = num>>shift;
+    int shift = (8-N);
+    int newNumber= num>>shift;
     return newNumber;
 
   }
@@ -137,7 +137,10 @@ public class Picture extends SimplePicture
     *  TODO: Add header comments and complete this method.  (See writeup)
     */
   public int hideMessageInNBits(int contextVal, int messageVal, int n){
-    //Implement this Method
+    contextVal = contextVal>>n<<n;
+    contextVal = contextVal|messageVal;
+    return contextVal;
+
   }
 
   /**
@@ -145,7 +148,46 @@ public class Picture extends SimplePicture
     */
   public Picture hideSecretMessageNBits(Picture message, int nBits )
   {
-    //Iplement this method
+    Picture copy = new Picture(this.getWidth(),this.getHeight());
+    for(int x = 0; x < this.getWidth() && x < message.getWidth(); x++){
+      for(int y = 0; y < this.getHeight() && y < message.getHeight(); y++){
+        Pixel sourcePixel = this.getPixel(x,y);
+          Pixel messagePixel = message.getPixel(x,y);
+          int sourceRed = sourcePixel.getRed();
+          int sourceGreen = sourcePixel.getGreen();
+          int sourceBlue = sourcePixel.getBlue();
+        Pixel copyPixel = copy.getPixel(x,y);
+
+        copyPixel.setRed(sourceRed);
+        int messageRed = messagePixel.getRed();
+        int copyRed = copyPixel.getRed();
+
+        messageRed = mostSignificantN(messageRed,nBits);
+        copyRed = hideMessageInNBits(copyRed,messageRed,nBits);
+        copyPixel.setRed(copyRed);
+
+        copyPixel.setGreen(sourceGreen);
+        int messageGreen = messagePixel.getGreen();
+        int copyGreen = copyPixel.getGreen();
+
+        messageGreen = mostSignificantN(messageGreen,nBits);
+        copyGreen = hideMessageInNBits(copyGreen,messageGreen,nBits);
+        copyPixel.setGreen(copyGreen);
+
+
+        copyPixel.setBlue(sourceBlue);
+        int messageBlue = messagePixel.getBlue();
+        int copyBlue = copyPixel.getBlue();
+
+        messageBlue =mostSignificantN(messageBlue,nBits);
+        copyBlue = hideMessageInNBits(copyBlue,messageBlue,nBits);
+        copyPixel.setBlue(copyBlue);
+
+
+}
+}
+return copy;
+
   }
 
   /**************  END OF PART 2 METHODS *********************/
