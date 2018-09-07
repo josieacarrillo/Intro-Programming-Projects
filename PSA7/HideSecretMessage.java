@@ -12,11 +12,12 @@ public class HideSecretMessage extends Picture
     {
       String fileName = FileChooser.pickAFile();
       Picture orig = new Picture(fileName);
+      String fileName2 = FileChooser.pickAFile();
       Picture messagePic = new Picture(fileName2);
       Picture origWithMessage = orig.hideSecretMessage2Bits(messagePic);
 
       orig.explore();
-      message.explore();
+      messagePic.explore();
       origWithMessage.explore();
 
       Picture message = origWithMessage.recoverSecretMessage2Bits();
