@@ -120,52 +120,56 @@ public Picture hideSecretMessage2Bits(Picture message)
   Picture canvas = new Picture(this.getWidth(),this.getHeight());
    System.out.println("message width ="+ message.getWidth());
     System.out.println("message height ="+ message.getHeight());
-    //the width is off when hiding message into an image with a different size 
-  for(int x = 0; x < this.getWidth() && x < message.getWidth()-1; x++){
-
-    for(int y = 0; y < this.getHeight() && y < message.getHeight(); y++){
+    System.out.println("canvas width="+ canvas.getWidth());
+    //the width is off when hiding message into an image with a different size
+  for(int x = 0; x < this.getWidth(); x++){
+    for(int y = 0; y < this.getHeight(); y++){
+    //  System.out.println("x="+x);
       Pixel sourcePixel = this.getPixel(x,y);
-        Pixel messagePixel = message.getPixel(x,y);
+
         //grab Pixels colors from calling objects
       int sourceRed = sourcePixel.getRed();
       int sourceGreen = sourcePixel.getGreen();
       int sourceBlue = sourcePixel.getBlue();
-
       Pixel canvasPixel = canvas.getPixel(x,y);
-
       canvasPixel.setRed(sourceRed);
-
-      int messageRed = messagePixel.getRed();
-    int  canvasRed = canvasPixel.getRed();
-     canvasRed = canvasRed>>2<<2;
-
-      int mostSignificant = messageRed>>6;
-      canvasRed = mostSignificant|canvasRed;
-      canvasPixel.setRed(canvasRed);
-
-
-
-    canvasPixel.setBlue(sourceBlue);
-
-      int messageBlue = messagePixel.getBlue();
+      canvasPixel.setBlue(sourceBlue);
+      canvasPixel.setGreen(sourceGreen);
+      int  canvasRed = canvasPixel.getRed();
       int canvasBlue = canvasPixel.getBlue();
-        canvasBlue = canvasBlue>>2<<2;
-       mostSignificant = messageBlue>>6;
-      canvasBlue = mostSignificant|canvasBlue;
-      canvasPixel.setBlue(canvasBlue);
-
-
-
-
-
-     canvasPixel.setGreen(sourceGreen);
-
-      int messageGreen = messagePixel.getGreen();
       int canvasGreen = canvasPixel.getGreen();
+
+      if( x < message.getWidth() && y < message.getHeight() ){
+        Pixel messagePixel = message.getPixel(x,y);
+        int messageRed = messagePixel.getRed();
+        int messageBlue = messagePixel.getBlue();
+        int messageGreen = messagePixel.getGreen();
+        canvasRed = canvasRed>>2<<2;
+        int mostSignificant = messageRed>>6;
+        canvasRed = mostSignificant|canvasRed;
+        canvasPixel.setRed(canvasRed);
+
+       canvasBlue = canvasBlue>>2<<2;
+       mostSignificant = messageBlue>>6;
+       canvasBlue = mostSignificant|canvasBlue;
+       canvasPixel.setBlue(canvasBlue);
+
        canvasGreen = canvasGreen>>2<<2;
        mostSignificant = messageGreen>>6;
-      canvasGreen = mostSignificant|canvasGreen;
-     canvasPixel.setGreen(canvasGreen);
+       canvasGreen = mostSignificant|canvasGreen;
+       canvasPixel.setGreen(canvasGreen);
+
+
+
+
+      } else{
+         canvasPixel.setRed(sourceRed);
+         canvasPixel.setBlue(sourceBlue);
+         canvasPixel.setGreen(sourceGreen);
+
+      }
+
+
 
 
 
