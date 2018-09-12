@@ -107,9 +107,21 @@ public class Sound extends SimpleSound
   /**
    *
    */
-  public Sound pluck (int soundLength){
-    return null;
+  public Sound pluck (int soundLength)
+  {
+
+    Sound result = new Sound(soundLength);
+    SoundSample[] resultArray = result.getSamples();
+    for(int i = 0; i < resultArray.length; i++){
+      
+    }
+
+
+
+
   }
+
+
 
 
   /**
