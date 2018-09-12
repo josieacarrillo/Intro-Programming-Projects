@@ -109,11 +109,15 @@ public class Sound extends SimpleSound
    */
   public Sound pluck (int soundLength)
   {
-
+    SoundSample[] whitenoise = this.getSamples();
     Sound result = new Sound(soundLength);
     SoundSample[] resultArray = result.getSamples();
     for(int i = 0; i < resultArray.length; i++){
-      
+    int indexVal = whitenoise[i].getValue();
+    int newVal = ((indexVal+(indexVal+1))/2)*0.996;
+    resultArray[i].setValue(newVal);
+
+
     }
 
 
