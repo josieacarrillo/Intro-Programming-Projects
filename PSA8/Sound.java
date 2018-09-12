@@ -84,30 +84,38 @@ public class Sound extends SimpleSound
    * Method to call student's implementation of whitenoise
    * @return a sound object of whitenoise
    */
-  public static Sound whitenoise(int frequency)
-  {
-    return whitenoise(frequency, new Random());
-    SoundSample[] noiseArray = this.getSamples();
 
-    for(int i=0; i < noiseArray.length; i++){
-      
-    }
-  }
 
   /**
    *
    */
   public static Sound whitenoise(int frequency, Random rand)
 
+  {
+    return whitenoise(frequency, new Random());
+    Sound sound = new Sound(Math.ceil(22050.0/frequency));
+    SoundSample[] noiseArray = sound.getSamples();
+    for(int i = 0; i < noiseArray.length; i++){
+      Random random = new Random();
+      int rand = random.nextInt(32768*2)-32768;
+      noiseArray[i].setValue(rand);
+
+    }
+    return sound;
+  }
 
   /**
    *
    */
-  public Sound pluck (int soundLength)
+  public Sound pluck (int soundLength){
+    return null;
+  }
 
 
   /**
    *
    */
-  public boolean sameSound(Sound s)
+  public boolean sameSound(Sound s){
+    return null;
+  }
 } // this } is the end of class Sound, put all new methods before this
