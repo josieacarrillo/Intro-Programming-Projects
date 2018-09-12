@@ -92,13 +92,14 @@ public class Sound extends SimpleSound
   public static Sound whitenoise(int frequency, Random rand)
 
   {
-    return whitenoise(frequency, new Random());
-    Sound sound = new Sound(Math.ceil(22050.0/frequency));
+  //  return whitenoise(frequency, new Random());
+    int soundLength = (int)Math.ceil(22050.0/frequency);
+    Sound sound = new Sound(soundLength);
     SoundSample[] noiseArray = sound.getSamples();
     for(int i = 0; i < noiseArray.length; i++){
-      Random random = new Random();
-      int rand = random.nextInt(32768*2)-32768;
-      noiseArray[i].setValue(rand);
+    //  Random rand = new Random();
+
+      noiseArray[i].setValue(rand.nextInt(32768*2)-32768);
 
     }
     return sound;
@@ -114,13 +115,13 @@ public class Sound extends SimpleSound
     SoundSample[] resultArray = result.getSamples();
     for(int i = 0; i < resultArray.length; i++){
     int indexVal = whitenoise[i].getValue();
-    int newVal = ((indexVal+(indexVal+1))/2)*0.996;
+    int newVal = (int)(((indexVal+(indexVal+1))/2)*0.996);
     resultArray[i].setValue(newVal);
 
 
     }
 
-
+return result;
 
 
   }
@@ -131,7 +132,5 @@ public class Sound extends SimpleSound
   /**
    *
    */
-  public boolean sameSound(Sound s){
-    return null;
-  }
+//  public boolean sameSound(Sound s)
 } // this } is the end of class Sound, put all new methods before this
