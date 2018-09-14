@@ -114,12 +114,20 @@ public class Sound extends SimpleSound
     Sound result = new Sound(soundLength);
     SoundSample[] resultArray = result.getSamples();
 
-    SoundSample firstVal = whitenoise[0];
+    int firstVal = whitenoise[0].getValue();
+
     for(int i = 1; i < whitenoise.length; i++){
-      whitenoise[i-1] = whitenoise[i];
+
+      int indexVal = whitenoise[i].getValue();
+      whitenoise[i-1].setValue(indexVal);
+
       SoundSample lastVal = whitenoise[whitenoise.length-1];
-      lastVal.setValue(((firstVal+whitenoise[i])/2)*0.996);
-      
+
+      int finalVal= (int)(((firstVal+whitenoise[i].getValue())/2)*0.996);
+
+      lastVal.setValue(finalVal);
+
+
 
 
 
@@ -136,31 +144,25 @@ return result;
 
   SoundSample[] sArray = s.getSamples();
   SoundSample[] sound = this.getSamples();
-  System.out.println("sArray length="+sArray.length);
-  System.out.println("sound length ="+ sound.length);
-  for (int i =0; i < sArray.length; i++){
-    System.out.println("sArray[i]="+ sArray[i]);
-    System.out.println("sound[i]="+ sound[i]);
 
-    if(sound[i]==sArray[i] && sound.length == sArray.length){
-
-
-      return false;
-    }else{
-
-      return true;
-    }
+  if(sound.length == sArray.length){
+    for(int i = 0; i < sound.length; i++){
+      if(sound[i].getValue() != sArray[i].getValue()){
+        return false;
+      }
 
     }
-return true;
+    return true;
+  }else{
+    return false;
+
   }
 
 
 
 
 
-  /**
-   *
-   */
+}
+
 
 } // this } is the end of class Sound, put all new methods before this
