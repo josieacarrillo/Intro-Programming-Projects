@@ -114,31 +114,27 @@ public class Sound extends SimpleSound
     Sound result = new Sound(soundLength);
     SoundSample[] resultArray = result.getSamples();
 
+    int temp = whitenoise[0].getValue();
+    for(int i = 0; i < whitenoise.length+1; i++){
 
-    for(int i = 1; i < whitenoise.length; i++){
+      int rightVal = resultArray[i+1].getValue();
+      resultArray[i].setValue(rightVal);
+
+
       int firstVal = whitenoise[0].getValue();
-      int resultFirst = firstVal;
-      int newVal = whitenoise[i].getValue();
-      int resultNewVal = newVal;
+      int secondVal = whitenoise[1].getValue();
+      int finalVal= (int)(((firstVal+secondVal)/2)*0.996);
+      resultArray[resultArray.length-1].setValue(finalVal);
 
-      whitenoise[i-1].setValue(newVal);
-      resultArray[i-1].setValue(resultNewVal);
-
-      SoundSample lastVal = whitenoise[whitenoise.length-1].getValue();
-      SoundSample resultLastVal =lastVal;
-
-      int finalVal= (int)(((firstVal+whitenoise[i].getValue())/2)*0.996);
-      int resultFinalVal = finalVal;
-
-      lastVal.setValue(finalVal);
-      resultLastVal.setValue(resultFinalVal);
+      int rightWhiteVal = whitenoise[i+1].getValue();
+      whitenoise[i].setValue(rightWhiteVal);
 
 
 
 
 
     }
-
+whitenoise[whitenoise.length-1].setValue(temp);
 return result;
 
 
