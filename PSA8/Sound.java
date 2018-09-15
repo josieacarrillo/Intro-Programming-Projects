@@ -108,6 +108,22 @@ public class Sound extends SimpleSound
   /**
    *
    */
+
+   private Sound shiftleft ()
+   {
+
+     SoundSample[] noiseArray = this.getSamples();
+    int temp = noiseArray[0].getValue();
+
+     for(int i = 0; i < noiseArray.length; i++){
+     int rightVal = noiseArray[i+1].getValue();
+     noiseArray[i].setValue(rightVal);
+}
+     noiseArray[noiseArray.length-1].setValue(temp);
+
+   }
+
+
   public Sound pluck (int soundLength)
   {
     SoundSample[] whitenoise = this.getSamples();
@@ -115,8 +131,8 @@ public class Sound extends SimpleSound
     SoundSample[] resultArray = result.getSamples();
 
 
-    int temp = whitenoise[0].getValue();
-    for(int i = 0; i < whitenoise.length+1; i++){
+
+    for(int i = 0; i < whitenoise.length; i++){
 
     //calculate and set new value in the last element of resultArray
       int firstVal = whitenoise[0].getValue();
@@ -125,23 +141,19 @@ public class Sound extends SimpleSound
       resultArray[resultArray.length-1].setValue(finalVal);
 
       //shift whitenoise array left
-      int rightWhiteVal = whitenoise[i+1].getValue();
-      whitenoise[i].setValue(rightWhiteVal);
+      whitenoise.shiftleft();
 
       //shift reultArray left
-      int rightVal = resultArray[i+1].getValue();
-      resultArray[i].setValue(rightVal);
+      resultArray.shitleft();
 
 
-      System.out.println("resultArray[i]:"+ resultArray[resultArray.length-1]);
-      System.out.println("whitenoise[0]:" + whitenoise[0]);
-      System.out.println("whitenoise[1]:" + whitenoise[1]);
+
 
 
 
 
     }
-whitenoise[whitenoise.length-1].setValue(temp);
+
 return result;
 
 
