@@ -109,10 +109,10 @@ public class Sound extends SimpleSound
    *
    */
 
-   private Sound shiftleft ()
+   private static void shiftleft (SoundSample[] noiseArray)
    {
 
-     SoundSample[] noiseArray = this.getSamples();
+
     int temp = noiseArray[0].getValue();
 
      for(int i = 0; i < noiseArray.length; i++){
@@ -141,10 +141,10 @@ public class Sound extends SimpleSound
       resultArray[resultArray.length-1].setValue(finalVal);
 
       //shift whitenoise array left
-      whitenoise.shiftleft();
+      Sound.shiftleft(whitenoise);
 
       //shift reultArray left
-      resultArray.shitleft();
+      Sound.shiftleft(resultArray);
 
 
 
