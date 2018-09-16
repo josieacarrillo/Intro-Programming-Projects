@@ -98,9 +98,10 @@ public class Sound extends SimpleSound
       newSoundArray[firstSoundArray.length + i] = secondSoundArray[i];
 
     }
-    for(int i = soundLength; soundlength < newSoundArray.length; i++);
+    for(int i = soundLength; soundlength < newSoundArray.length; i++){
     newSoundArray[i] = 0;
   }
+}
 
 
   public void concatenateSound(Sound firstSound, Sound secondSound, int switchPoint)
@@ -110,7 +111,7 @@ public class Sound extends SimpleSound
 
     Sound sound = new Sound();
     SoundSample[] newSoundArray = sound.getSamples(switchPoint+secondSoundArray.length);
-
+    int soundLength = firstSoundArray.length + secondSoundArray.length;
 
     if(swtichPoint > 0){
     for(int i = 0; i < switchPoint; i++){
@@ -121,9 +122,16 @@ public class Sound extends SimpleSound
 
       newSoundArray[switchPoint + i] = secondSoundArray[i];
     }
+    for(int i = soundLength; soundlength < newSoundArray.length; i++){
+    newSoundArray[i] = 0;
 }
   if(switchPoint < 0){
-    
+    for(int i=0; i < secondSoundArray.length; i++){
+      newSoundArray[i] = secondSoundArray[i];
+    }
+    for(int i = secondSoundArray; i < newSoundArray; i++){
+      newSoundArray[i] = 0;
+    }
   }
   }
 
