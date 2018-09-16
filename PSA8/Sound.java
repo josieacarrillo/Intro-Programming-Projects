@@ -98,8 +98,10 @@ public class Sound extends SimpleSound
     SoundSample[] noiseArray = sound.getSamples();
     for(int i = 0; i < noiseArray.length; i++){
     //  Random rand = new Random();
+    int random = (rand.nextInt(32768*2)-32768);
 
-      noiseArray[i].setValue(rand.nextInt(32768*2)-32768);
+      noiseArray[i].setValue(random);
+      System.out.println(random);
 
     }
     return sound;
@@ -115,12 +117,14 @@ public class Sound extends SimpleSound
 
     int temp = noiseArray[0].getValue();
 
-     for(int i = 0; i < noiseArray.length; i++){
-     int rightVal = noiseArray[i+1].getValue();
-     noiseArray[i].setValue(rightVal);
-}
-     noiseArray[noiseArray.length-1].setValue(temp);
+     for(int i = 0; i+1 < noiseArray.length; i++){
 
+      int rightVal = noiseArray[i+1].getValue();
+     noiseArray[i].setValue(rightVal);
+
+
+}
+ noiseArray[noiseArray.length-1].setValue(temp);
    }
 
 
@@ -130,18 +134,21 @@ public class Sound extends SimpleSound
     Sound result = new Sound(soundLength);
     SoundSample[] resultArray = result.getSamples();
 
-
+    //System.out.println("resultArray length:"+ resultArray.length);
 
     for(int i = 0; i < whitenoise.length; i++){
 
     //calculate and set new value in the last element of resultArray
       int firstVal = whitenoise[0].getValue();
       int secondVal = whitenoise[1].getValue();
-      int finalVal= (int)(((firstVal+secondVal)/2)*0.996);
+      int finalVal= (int)(((firstVal+(secondVal))/2.0)*0.996);
+
       resultArray[resultArray.length-1].setValue(finalVal);
 
       //shift whitenoise array left
       Sound.shiftleft(whitenoise);
+    //  System.out.println("whitenoise[0]:"+ whitenoise[0]);
+      //  System.out.println("whitenoise[1]:"+ whitenoise[1]);
 
       //shift reultArray left
       Sound.shiftleft(resultArray);
@@ -156,6 +163,17 @@ public class Sound extends SimpleSound
 
 return result;
 
+
+  }
+
+  public static void main (String [] args) {
+     Sound sound = Sound.whitenoise(1,new Random());
+
+    sound.pluck(1000).explore();
+
+    //String fileName = FileChooser.pickAFile();
+    //Sound newSound = new Sound(fileName);
+    //sound.sameSound(newSound);
 
   }
 
