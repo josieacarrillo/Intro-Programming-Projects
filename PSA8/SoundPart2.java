@@ -122,6 +122,9 @@ public class Sound extends SimpleSound
       newSoundArray[switchPoint + i] = secondSoundArray[i];
     }
 }
+  if(switchPoint < 0){
+    
+  }
   }
 
 
