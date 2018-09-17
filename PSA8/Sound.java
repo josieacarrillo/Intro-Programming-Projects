@@ -133,7 +133,7 @@ public class Sound extends SimpleSound
     SoundSample[] whitenoise = this.getSamples();
     Sound result = new Sound(soundLength);
     SoundSample[] resultArray = result.getSamples();
-
+    static final double decay = 0.996;
     //System.out.println("resultArray length:"+ resultArray.length);
 
     for(int i = 0; i < whitenoise.length; i++){
@@ -141,7 +141,7 @@ public class Sound extends SimpleSound
     //calculate and set new value in the last element of resultArray
       int firstVal = whitenoise[0].getValue();
       int secondVal = whitenoise[1].getValue();
-      int finalVal= (int)(((firstVal+(secondVal))/2.0)*0.996);
+      int finalVal= (int)(((firstVal+(secondVal))/2.0)*decay);
 
       resultArray[resultArray.length-1].setValue(finalVal);
 
