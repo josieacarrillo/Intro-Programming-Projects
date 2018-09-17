@@ -103,20 +103,43 @@ public class Picture extends SimplePicture
     public void flipVerticalRectangle(int x, int y, int width, int height)
     {
       Picture source = new Picture(this.getWidth(),this.getHeight());
-  for(int startX = 0; startX < this.getWidth(); startX++){
-    for( int startY = 0; startY < this.getHeight(); startY++){
-      if (x > -1){
-        if(x < this.getWidth()){
-          if(y > -1){
-            if(y < this.getHeight()){
-              
-            }
-          }
+      for(int i = 0; i < this.getWidth(); i++){
+        for (int j = 0; j < this.getHeight(); j++){
+          Pixel sourcePixel = this.getPixel(i,j);
         }
       }
-    }
-  }
+      x = max(i,x);
+      width = min(i + wdith-1, width);
 
+      y = max(y,j);
+      height = min(j + height-1, height);
+
+      int n = height;
+      int start = y;
+      int end = y + height- 1;
+
+      for(int column =x; column < x + width; column++){
+        for( int i = 0; i < n/2; i++){
+          int top = start+ i;
+          int bottom = end - i;
+          int temp = this.getPixel(column, top).getRed();
+          int bottomRed = this.getPixel(column, bottom).getRed();
+          this.getPixel(column,top).setRed(bottomRed);
+          this.getPixel(column, bottom).setRed(temp);
+
+          int temp2 = this.getPixel(column, top).getGreen();
+          int bottomGreen = this.getPixel(column, bottom).getGreen();
+          this.getPixel(column,top).setGreen(bottomGreen);
+          this.getPixel(column, bottom).setGreen(temp2);
+
+          int temp3 = this.getPixel(column, top).getBlue();
+          int bottomBlue = this.getPixel(column, bottom).getBlue();
+          this.getPixel(column,top).setBlue(bottomBlue);
+          this.getPixel(column, bottom).setBlue(temp3);
+
+
+        }
+      }
 
 
     }
@@ -126,6 +149,46 @@ public class Picture extends SimplePicture
     **/
     public void flipHorizontalRectangle(int x, int y, int width, int height)
     {
+      Picture source = new Picture(this.getWidth(),this.getHeight());
+      for(int i = 0; i < this.getWidth(); i++){
+        for (int j = 0; j < this.getHeight(); j++){
+          Pixel sourcePixel = this.getPixel(i,j);
+        }
+      }
+      x = max(i,x);
+      width = min(i + wdith-1, width);
+
+      y = max(y,j);
+      height = min(j + height-1, height);
+      int n = width;
+      int start = x;
+      int end = x + width-1;
+
+
+      for (int row =y; row < y+ height; row++){
+      for(int i = 0; i < n/2; i++){
+        int left = start + i;
+        int right = end - i;
+        int temp = this.getPixel(left,row).getRed();
+        int rightRed = this.getPixel(right, row ).getRed();
+        this.getPixel(left,row).setRed(rightRed);
+        this.getPixel(right, row).setRed(temp);
+
+        int temp2 = this.getPixel(left,row).getGreen();
+        int rightGreen = this.getPixel(right, row).getGreen();
+        this.getPixel(left,row).setGreen(rightGreen);
+        this.getPixel(right, row).setGreen(temp2);
+
+        int temp3 = this.getPixel(left,row).getBlue();
+        int rightBlue = this.getPixel(right, row ).getBlue();
+        this.getPixel(left,row).setBlue(rightBlue);
+        this.getPixel(right, row).setBlue(temp3);
+
+
+
+
+      }
+}
     }
 
 
