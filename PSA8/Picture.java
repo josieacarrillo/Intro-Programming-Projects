@@ -103,16 +103,16 @@ public class Picture extends SimplePicture
     public void flipVerticalRectangle(int x, int y, int width, int height)
     {
       Picture source = new Picture(this.getWidth(),this.getHeight());
-      for(int i = 0; i < this.getWidth(); i++){
-        for (int j = 0; j < this.getHeight(); j++){
-          Pixel sourcePixel = this.getPixel(i,j);
-        }
-      }
-      x = max(i,x);
-      width = min(i + wdith-1, width);
+      for(int startX= 0; startX < this.getWidth(); startX++){
+        for (int startY = 0; startY < this.getHeight(); startY++){
+          Pixel sourcePixel = this.getPixel(startX,startY);
 
-      y = max(y,j);
-      height = min(j + height-1, height);
+
+      x = Max(startX,x);
+      width = Min(startX + width-1, width);
+
+      y = Max(y,startY);
+      height = Min(startY + height-1, height);
 
       int n = height;
       int start = y;
@@ -137,7 +137,8 @@ public class Picture extends SimplePicture
           this.getPixel(column,top).setBlue(bottomBlue);
           this.getPixel(column, bottom).setBlue(temp3);
 
-
+}
+}
         }
       }
 
@@ -150,16 +151,16 @@ public class Picture extends SimplePicture
     public void flipHorizontalRectangle(int x, int y, int width, int height)
     {
       Picture source = new Picture(this.getWidth(),this.getHeight());
-      for(int i = 0; i < this.getWidth(); i++){
-        for (int j = 0; j < this.getHeight(); j++){
-          Pixel sourcePixel = this.getPixel(i,j);
-        }
-      }
-      x = max(i,x);
-      width = min(i + wdith-1, width);
+      for(int startX = 0; startX < this.getWidth(); startX++){
+        for (int startY = 0; startY < this.getHeight(); startY++){
+          Pixel sourcePixel = this.getPixel(startX, startY);
 
-      y = max(y,j);
-      height = min(j + height-1, height);
+
+      x = Max(startX,x);
+      width = Min(startX + wdith-1, width);
+
+      y = Max(y,startY);
+      height = Min(startY + height-1, height);
       int n = width;
       int start = x;
       int end = x + width-1;
@@ -185,7 +186,8 @@ public class Picture extends SimplePicture
         this.getPixel(right, row).setBlue(temp3);
 
 
-
+      }
+    }
 
       }
 }
