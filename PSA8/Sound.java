@@ -126,15 +126,15 @@ public class Sound extends SimpleSound
 //if switchpoint is pos, place both arrays and their values into new array and sets extra values to 0
     if(switchPoint > 0){
     for(int i = 0; i < switchPoint && i < newSoundArray.length && i < firstSoundArray.length; i++){
-
-    newSoundArray[i] = firstSoundArray[i];
+      int first = firstSoundArray[i].getValue();
+    newSoundArray[i].setValue(first);
     //System.out.println("newSoundArray[i]="+newSoundArray[i]);
   }
 
 
     for(int i = 0; i < secondSoundArray.length && switchPoint + i < newSoundArray.length; i++){
-
-      newSoundArray[switchPoint + i] = secondSoundArray[i];
+      int second = secondSoundArray[i].getValue();
+      newSoundArray[switchPoint + i].setValue(second);
     }
     for(int i = switchPoint+secondSoundArray.length; i < newSoundArray.length; i++){
     newSoundArray[i].setValue(0);
@@ -142,9 +142,11 @@ public class Sound extends SimpleSound
 // if switchPoint is negative, copies only second array into new array and sets extra values in new array to 0
 
 
-  if(switchPoint <= 0){
-    for(int i=0; i < secondSoundArray.length; i++){
-      newSoundArray[i] = secondSoundArray[i];
+  if(switchPoint <=0){
+    for(int i = 0; i < secondSoundArray.length; i++){
+    int  second = secondSoundArray[i].getValue();
+      newSoundArray[i].setValue(second);
+      System.out.println("newSoundArray[i]="+ newSoundArray[i]);
     }
     for(int i = secondSoundArray.length; i < newSoundArray.length; i++){
       newSoundArray[i].setValue(0);
