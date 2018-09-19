@@ -102,26 +102,26 @@ public class Picture extends SimplePicture
     **/
     public void flipVerticalRectangle(int x, int y, int width, int height)
     {
-      Picture source = new Picture(this.getWidth(),this.getHeight());
-      for(int startX= 0; startX < this.getWidth(); startX++){
-        for (int startY = 0; startY < this.getHeight(); startY++){
-          Pixel sourcePixel = this.getPixel(startX,startY);
+    //  Picture source = new Picture(this.getWidth(),this.getHeight());
 
 
-      x = Max(startX,x);
-      width = Min(startX + width-1, width);
 
-      y = Max(y,startY);
-      height = Min(startY + height-1, height);
 
+      x = Math.max(0,x);
+      int endX = Math.min(this.getWidth()-1, x + width-1);
+
+      y = Math.max(y,0);
+      int endY = Math.min(this.getHeight()-1, y + height-1);
+
+      height = ((endY -y)+1);
       int n = height;
       int start = y;
-      int end = y + height- 1;
+    //  int end = y + height -1;
 
-      for(int column =x; column < x + width; column++){
+      for(int column =x; column <= endX ; column++){
         for( int i = 0; i < n/2; i++){
           int top = start+ i;
-          int bottom = end - i;
+          int bottom = endY - i;
           int temp = this.getPixel(column, top).getRed();
           int bottomRed = this.getPixel(column, bottom).getRed();
           this.getPixel(column,top).setRed(bottomRed);
@@ -137,8 +137,7 @@ public class Picture extends SimplePicture
           this.getPixel(column,top).setBlue(bottomBlue);
           this.getPixel(column, bottom).setBlue(temp3);
 
-}
-}
+
         }
       }
 
@@ -150,26 +149,27 @@ public class Picture extends SimplePicture
     **/
     public void flipHorizontalRectangle(int x, int y, int width, int height)
     {
-      Picture source = new Picture(this.getWidth(),this.getHeight());
-      for(int startX = 0; startX < this.getWidth(); startX++){
-        for (int startY = 0; startY < this.getHeight(); startY++){
-          Pixel sourcePixel = this.getPixel(startX, startY);
 
 
-      x = Max(startX,x);
-      width = Min(startX + wdith-1, width);
+      x = Math.max(0,x);
+      int endX = Math.min(this.getWidth()-1,x + width-1);
+      
 
-      y = Max(y,startY);
-      height = Min(startY + height-1, height);
+
+
+      y = Math.max(y,0);
+      int endY = Math.min(this.getHeight()-1, y +height-1);
+
+       width = ((endX-x)+1);
       int n = width;
       int start = x;
       int end = x + width-1;
+      height = ((endY-y)+1);
 
-
-      for (int row =y; row < y+ height; row++){
+      for (int row =y; row <= endY; row++){
       for(int i = 0; i < n/2; i++){
-        int left = start + i;
-        int right = end - i;
+        int left = start +i;
+        int right = endX - i;
         int temp = this.getPixel(left,row).getRed();
         int rightRed = this.getPixel(right, row ).getRed();
         this.getPixel(left,row).setRed(rightRed);
@@ -186,8 +186,7 @@ public class Picture extends SimplePicture
         this.getPixel(right, row).setBlue(temp3);
 
 
-      }
-    }
+
 
       }
 }
