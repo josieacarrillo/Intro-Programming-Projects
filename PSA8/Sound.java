@@ -79,6 +79,7 @@ public class Sound extends SimpleSound
   }
 
 
+
   public void concatenateSound(Sound firstSound, Sound secondSound)
   {
     SoundSample[] firstSoundArray = firstSound.getSamples();
@@ -86,25 +87,22 @@ public class Sound extends SimpleSound
 
 
     int soundLength = (firstSoundArray.length + secondSoundArray.length);
-      //System.out.println("firstSoundArray.length="+firstSoundArray.length);
 
     SoundSample[] newSoundArray = this.getSamples();
     //grabs each value of first array into new array
     for (int i = 0; i < firstSoundArray.length; i++){
       int first = firstSoundArray[i].getValue();
       newSoundArray[i].setValue(first);
-    //  System.out.println("firstSoundArray[0]="+firstSoundArray[0]);
-    //  System.out.println("newSoundArray[i]="+newSoundArray[i]);
+
 
     }
     //starts off where first array ends, places second array directly after
     for( int i = 0; i < secondSoundArray.length; i++){
     int second = secondSoundArray[i].getValue();
-    //System.out.println("secondSoundArray[i]="+secondSoundArray[i]);
+
 
      newSoundArray[firstSoundArray.length + i].setValue(second);
-      //System.out.println("newSoundArray[firstSoundArray.length + i]="+newSoundArray[firstSoundArray.length + i]);
-//System.out.println("newNewSoundArray[i]="+newSoundArray[i]);
+
     }
 
 
@@ -128,7 +126,7 @@ public class Sound extends SimpleSound
     for(int i = 0; i < switchPoint && i < newSoundArray.length && i < firstSoundArray.length; i++){
       int first = firstSoundArray[i].getValue();
     newSoundArray[i].setValue(first);
-    //System.out.println("newSoundArray[i]="+newSoundArray[i]);
+
   }
 
 
@@ -140,19 +138,19 @@ public class Sound extends SimpleSound
     newSoundArray[i].setValue(0);
 }
 // if switchPoint is negative, copies only second array into new array and sets extra values in new array to 0
-
-
+}
   if(switchPoint <=0){
+    //System.out.println("switchPoint:"+switchPoint);
     for(int i = 0; i < secondSoundArray.length; i++){
     int  second = secondSoundArray[i].getValue();
       newSoundArray[i].setValue(second);
-      System.out.println("newSoundArray[i]="+ newSoundArray[i]);
+
     }
     for(int i = secondSoundArray.length; i < newSoundArray.length; i++){
       newSoundArray[i].setValue(0);
      }
    }
- }
+
 }
 
 } // this } is the end of class Sound, put all new methods before this
