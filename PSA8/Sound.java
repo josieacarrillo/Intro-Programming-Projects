@@ -1,6 +1,7 @@
+//package com.gradescope.psa8part2;
 /* Filename: Sound.java
 * Created by: CSE 8A Staff
-* Date: Winter 2018
+* Date: Fall 2018
 */
 /**
  * Class that represents a sound.  This class is used by the students
@@ -9,9 +10,6 @@
  * Copyright Georgia Institute of Technology 2004
  * @author Barbara Ericson ericson@cc.gatech.edu
  */
-
-import java.util.Random;
-
 public class Sound extends SimpleSound
 {
 
@@ -80,127 +78,79 @@ public class Sound extends SimpleSound
     return output;
   }
 
-  /**
-   * Method to call student's implementation of whitenoise
-   * @return a sound object of whitenoise
-   */
 
-
-  /**
-   *
-   */
-  public static Sound whitenoise(int frequency, Random rand)
-
+  public void concatenateSound(Sound firstSound, Sound secondSound)
   {
-  //  return whitenoise(frequency, new Random());
-    int soundLength = (int)Math.ceil(22050.0/frequency);
-    Sound sound = new Sound(soundLength);
-    SoundSample[] noiseArray = sound.getSamples();
-    for(int i = 0; i < noiseArray.length; i++){
-    //  Random rand = new Random();
-    int random = (rand.nextInt(32768*2)-32768);
+    SoundSample[] firstSoundArray = firstSound.getSamples();
+    SoundSample[] secondSoundArray = secondSound.getSamples();
 
-      noiseArray[i].setValue(random);
-      System.out.println(random);
+
+    int soundLength = (firstSoundArray.length + secondSoundArray.length);
+      //System.out.println("firstSoundArray.length="+firstSoundArray.length);
+
+    SoundSample[] newSoundArray = this.getSamples();
+    //grabs each value of first array into new array
+    for (int i = 0; i < firstSoundArray.length; i++){
+      int first = firstSoundArray[i].getValue();
+      newSoundArray[i].setValue(first);
+    //  System.out.println("firstSoundArray[0]="+firstSoundArray[0]);
+    //  System.out.println("newSoundArray[i]="+newSoundArray[i]);
 
     }
-    return sound;
-  }
+    //starts off where first array ends, places second array directly after
+    for( int i = 0; i < secondSoundArray.length; i++){
+    int second = secondSoundArray[i].getValue();
+    //System.out.println("secondSoundArray[i]="+secondSoundArray[i]);
 
-  /**
-   *
-   */
-
-   private static void shiftleft (SoundSample[] noiseArray)
-   {
+     newSoundArray[firstSoundArray.length + i].setValue(second);
+      //System.out.println("newSoundArray[firstSoundArray.length + i]="+newSoundArray[firstSoundArray.length + i]);
+//System.out.println("newNewSoundArray[i]="+newSoundArray[i]);
+    }
 
 
-    int temp = noiseArray[0].getValue();
-
-     for(int i = 0; i+1 < noiseArray.length; i++){
-
-      int rightVal = noiseArray[i+1].getValue();
-     noiseArray[i].setValue(rightVal);
 
 
 }
- noiseArray[noiseArray.length-1].setValue(temp);
+
+
+  public void concatenateSound(Sound firstSound, Sound secondSound, int switchPoint)
+  {
+    SoundSample[] firstSoundArray = firstSound.getSamples();
+    SoundSample[] secondSoundArray = secondSound.getSamples();
+
+    int soundLength = firstSoundArray.length + secondSoundArray.length;
+
+    SoundSample[] newSoundArray = this.getSamples();
+
+    switchPoint = Math.min(firstSoundArray.length,switchPoint);
+//if switchpoint is pos, place both arrays and their values into new array and sets extra values to 0
+    if(switchPoint > 0){
+    for(int i = 0; i < switchPoint && i < newSoundArray.length && i < firstSoundArray.length; i++){
+
+    newSoundArray[i] = firstSoundArray[i];
+    //System.out.println("newSoundArray[i]="+newSoundArray[i]);
+  }
+
+
+    for(int i = 0; i < secondSoundArray.length && switchPoint + i < newSoundArray.length; i++){
+
+      newSoundArray[switchPoint + i] = secondSoundArray[i];
+    }
+    for(int i = switchPoint+secondSoundArray.length; i < newSoundArray.length; i++){
+    newSoundArray[i].setValue(0);
+}
+// if switchPoint is negative, copies only second array into new array and sets extra values in new array to 0
+
+
+  if(switchPoint <= 0){
+    for(int i=0; i < secondSoundArray.length; i++){
+      newSoundArray[i] = secondSoundArray[i];
+    }
+    for(int i = secondSoundArray.length; i < newSoundArray.length; i++){
+      newSoundArray[i].setValue(0);
+     }
    }
-
-
-  public Sound pluck (int soundLength)
-  {
-    SoundSample[] whitenoise = this.getSamples();
-    Sound result = new Sound(soundLength);
-    SoundSample[] resultArray = result.getSamples();
-    static final double decay = 0.996;
-    //System.out.println("resultArray length:"+ resultArray.length);
-
-    for(int i = 0; i < whitenoise.length; i++){
-
-    //calculate and set new value in the last element of resultArray
-      int firstVal = whitenoise[0].getValue();
-      int secondVal = whitenoise[1].getValue();
-      int finalVal= (int)(((firstVal+(secondVal))/2.0)*decay);
-
-      resultArray[resultArray.length-1].setValue(finalVal);
-
-      //shift whitenoise array left
-      Sound.shiftleft(whitenoise);
-    //  System.out.println("whitenoise[0]:"+ whitenoise[0]);
-      //  System.out.println("whitenoise[1]:"+ whitenoise[1]);
-
-      //shift reultArray left
-      Sound.shiftleft(resultArray);
-
-
-
-
-
-
-
-    }
-
-return result;
-
-
-  }
-
-  public static void main (String [] args) {
-     Sound sound = Sound.whitenoise(1,new Random());
-
-    sound.pluck(1000).explore();
-
-    //String fileName = FileChooser.pickAFile();
-    //Sound newSound = new Sound(fileName);
-    //sound.sameSound(newSound);
-
-  }
-
-  public boolean sameSound(Sound s)
-{
-
-  SoundSample[] sArray = s.getSamples();
-  SoundSample[] sound = this.getSamples();
-
-  if(sound.length == sArray.length){
-    for(int i = 0; i < sound.length; i++){
-      if(sound[i].getValue() != sArray[i].getValue()){
-        return false;
-      }
-
-    }
-    return true;
-  }else{
-    return false;
-
-  }
-
-
-
-
-
+ }
 }
-
 
 } // this } is the end of class Sound, put all new methods before this
