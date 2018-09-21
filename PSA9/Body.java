@@ -79,8 +79,8 @@ public class Body {
      */
     public double getDistance(Body otherBody)
     {
-        double deltaX = (this.getXPosition() - otherBody.getXPosition());
-        double deltaY = (this.getYPosition() - otherBody.getYPosition());
+        double deltaX = (otherBody.getXPosition() - this.getXPosition());
+        double deltaY = (otherBody.getYPosition() - this.getYPosition());
 
         double r = Math.hypot(deltaX,deltaY);
         return r;
@@ -94,7 +94,8 @@ public class Body {
      */
     public double getAcceleration(Body otherBody)
     {
-        double a = GRAVITATIONAL_CONSTANT*(otherBody.getMass()/(r*r));
+        double r = this.getDistance(otherBody);
+        double a = (GRAVITATIONAL_CONSTANT*(otherBody.getMass()/(r*r)));
         return a;
     }
 
@@ -105,8 +106,9 @@ public class Body {
      */
     public void updateVelocity(Body otherBody)
     {
-        double aX = (this.getAcceleration()*((otherBody.getXPosition() - this.getXPosition())/this.getDistance(otherBody)));
-        double aY = (this.getAcceleration()*((otherBody.getYPosition()-this.getYPosition())/this.getDistance(otherBody)));
+      double r = this.getDistance(otherBody);
+        double aX = (this.getAcceleration(otherBody)*((otherBody.getXPosition() - this.getXPosition())/r));
+        double aY = (this.getAcceleration(otherBody)*((otherBody.getYPosition()-this.getYPosition())/r));
     }
 
     /**
