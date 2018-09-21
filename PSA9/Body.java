@@ -109,6 +109,8 @@ public class Body {
       double r = this.getDistance(otherBody);
         double aX = (this.getAcceleration(otherBody)*((otherBody.getXPosition() - this.getXPosition())/r));
         double aY = (this.getAcceleration(otherBody)*((otherBody.getYPosition()-this.getYPosition())/r));
+        double updatedXVelocity = this.xVelocity + aX * timeStep;
+        double updatedYVelocity = this.yVelocity + aY * timeStep;
     }
 
     /**
@@ -116,7 +118,8 @@ public class Body {
      */
     public void move()
     {
-        // TODO
+        double newX = this.getXPosition() + this.xVelocity * timeStep;
+        double newY = this.getYPosition() + this.yVelocity * timeStep;
     }
 
     /**
