@@ -104,22 +104,34 @@ public class Picture extends SimplePicture
      */
     public void alphaBlending(int x, int y, Picture background)
     {
-      for( int i = 0; i < this.getWidth() && i + x < target.getWidth(); i++ ){
-        for(int j = 0; j < this.getHeight()&& j + y< target.getHeight(); j++){
-          int targetX = i +x;
-          int targetY = j + y;
-            Pixel sourcePixel = this.getPixel(i,j);
 
-            Pixel targetPixel = target.getPixel(x,y);
-            //System.out.println("x= " + x + "y ="+ y);
-          //  System.out.println("targetX="+ targetX+ "targetY=" + targetY);
+      x = Math.max(0,x);
+      y = Math.max(0,y);
+
+      for( int i = 0; i < this.getWidth() && i + x < background.getWidth(); i++ ){
+        for(int j = 0; j < this.getHeight()&& j + y < background.getHeight(); j++){
+          int backgroundX = i + x;
+          int backgroundY = j + y;
+            Pixel sourcePixel = this.getPixel(i,j);
             int sourceRed = sourcePixel.getRed();
             int sourceGreen = sourcePixel.getGreen();
             int sourceBlue = sourcePixel.getBlue();
-            targetPixel.setRed(sourceRed);
-            targetPixel.setGreen(sourceGreen);
-            targetPixel.setBlue(sourceBlue);
-    }
 
+            double alphaSource = sourcePixel.getAlpha();
+
+            Pixel targetPixel = background.getPixel(backgroundX,backgroundY);
+             int targetRed = targetPixel.getRed();
+             int targetGreen = targetPixel.getGreen();
+             int targetBlue = targetPixel.getBlue();
+
+             targetRed = (int)(( alphaSource / 255 * sourceRed ) + ((1 - alphaSource) / 255 ) * targetRed);
+             targetGreen = (int)((alphaSource / 255 * sourceGreen) + (( 1 - alphaSource)/255) * targetGreen);
+             targetBlue = (int) ((alphaSource / 255 * sourceBlue) + ((1 - alphaSource)/ 255) * targetBlue);
+            sourcePixel.setRed(targetRed);
+            sourcePixel.setGreen(targetGreen);
+            sourcePixel.setBlue(targetBlue);
+    }
+  }
+}
 
 } // this } is the end of class Picture, put all new methods before this
