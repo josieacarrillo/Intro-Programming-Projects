@@ -98,25 +98,28 @@ public class Body {
         double a = (GRAVITATIONAL_CONSTANT*(otherBody.getMass()/(r*r)));
         return a;
     }
-    public void setxPosition()
+    public void setxPosition(double xPosition)
     {
-
+      this.xPosition = xPosition;
 
     }
 
-    public void setyPositon()
+    public void setyPositon(double yPosition)
     {
+      this.yPosition = yPosition;
+    }
+
+    public void setxVelocity(double xVelocity)
+
+    {
+      this.xVelocity = xVelocity;
 
     }
 
-    public void setxVelocity()
+    public void setyVelocity(double yVelocity)
     {
+      this.yVelocity = yVelocity;
 
-    }
-
-    public void set yVelocity()
-    {
-      
     }
     /**
      * Apply the acceleration due to gravity on this body from another.
