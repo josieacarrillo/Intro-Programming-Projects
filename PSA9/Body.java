@@ -98,19 +98,42 @@ public class Body {
         double a = (GRAVITATIONAL_CONSTANT*(otherBody.getMass()/(r*r)));
         return a;
     }
+    public void setxPosition()
+    {
 
+
+    }
+
+    public void setyPositon()
+    {
+
+    }
+
+    public void setxVelocity()
+    {
+
+    }
+
+    public void set yVelocity()
+    {
+      
+    }
     /**
      * Apply the acceleration due to gravity on this body from another.
      *
      * @param planet The body to accelerate towards.
+
      */
+
     public void updateVelocity(Body otherBody)
     {
       double r = this.getDistance(otherBody);
-        double aX = (this.getAcceleration(otherBody)*((otherBody.getXPosition() - this.getXPosition())/r));
-        double aY = (this.getAcceleration(otherBody)*((otherBody.getYPosition()-this.getYPosition())/r));
-        double updatedXVelocity = this.xVelocity + aX * timeStep;
-        double updatedYVelocity = this.yVelocity + aY * timeStep;
+      double a = this.getAcceleration(otherBody);
+        double aX = a*((otherBody.getXPosition() - this.getXPosition())/r);
+        double aY = a*((otherBody.getYPosition()-this.getYPosition())/r);
+        this.setxVelocity(this.xVelocity + aX * timeStep);
+        this.setyVelocity(this.yVelocity + aY * timeStep);
+
     }
 
     /**
@@ -118,8 +141,8 @@ public class Body {
      */
     public void move()
     {
-        double newX = this.getXPosition() + this.xVelocity * timeStep;
-        double newY = this.getYPosition() + this.yVelocity * timeStep;
+        this.setxPosition( this.getXPosition() + (this.xVelocity * timeStep));
+        this.setyPositon( this.getYPosition() + (this.yVelocity * timeStep));
     }
 
     /**
