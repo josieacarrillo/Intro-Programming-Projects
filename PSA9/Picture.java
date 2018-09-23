@@ -108,6 +108,9 @@ public class Picture extends SimplePicture
       x = Math.max(0,x);
       y = Math.max(0,y);
 
+
+
+
       for( int i = 0; i < this.getWidth() && i + x < background.getWidth(); i++ ){
         for(int j = 0; j < this.getHeight()&& j + y < background.getHeight(); j++){
           int backgroundX = i + x;
@@ -124,12 +127,16 @@ public class Picture extends SimplePicture
              int targetGreen = targetPixel.getGreen();
              int targetBlue = targetPixel.getBlue();
 
+
+
              targetRed = (int)(( alphaSource / 255 * sourceRed ) + ((1 - alphaSource) / 255 ) * targetRed);
              targetGreen = (int)((alphaSource / 255 * sourceGreen) + (( 1 - alphaSource)/255) * targetGreen);
              targetBlue = (int) ((alphaSource / 255 * sourceBlue) + ((1 - alphaSource)/ 255) * targetBlue);
-            sourcePixel.setRed(targetRed);
-            sourcePixel.setGreen(targetGreen);
-            sourcePixel.setBlue(targetBlue);
+            targetPixel.setRed(targetRed);
+            targetPixel.setGreen(targetGreen);
+            targetPixel.setBlue(targetBlue);
+
+
     }
   }
 }
