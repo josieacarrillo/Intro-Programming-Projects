@@ -7,6 +7,8 @@ import java.awt.*;
 public class Body {
 
     private static final double GRAVITATIONAL_CONSTANT = 6.67E-11;
+    public static final int CANVAS_WIDTH = 512;
+    public static final int CANVAS_HEIGHT = 512;
 
     public static double timeStep;
     public static double universeSize;
@@ -155,8 +157,8 @@ public class Body {
      */
     public int centerXToPixelPosition()
     {
-        // TODO
-        return 0;
+        int xPosition = (int)Math.floor((this.getXPosition()/universeSize) * CANVAS_WIDTH);
+        return xPosition;
     }
 
     /**
@@ -166,8 +168,8 @@ public class Body {
      */
     public int centerYToPixelPosition()
     {
-        // TODO
-        return 0;
+        int yPosition = (int)Math.floor((this.getYPosition()/universeSize) * CANVAS_HEIGHT);
+        return yPosition;
     }
 
     /**
@@ -175,9 +177,26 @@ public class Body {
      *
      * @param universe The picture on which to draw the planet.
      */
+     public void setYToPixelPosition(double yPosition)
+     {
+       this.yPosition = yPosition;
+
+     }
+
+     public void setXToPixelPosition(double xPosition)
+     {
+       this.xPosition = xPosition;
+     }
+
+
     public void draw(Picture universe)
     {
-        // TODO
+
+      this.setXToPixelPosition(this.getXPosition()-image.getWidth()/2);
+      this.setYToPixelPosition(this.getYPosition()-image.getHeight()/2);
+      image.alphaBlending(this.centerXToPixelPosition(),this.centerYToPixelPosition(),universe);
+
+
     }
 
     /**
