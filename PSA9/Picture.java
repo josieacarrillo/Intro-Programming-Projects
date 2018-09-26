@@ -108,14 +108,19 @@ public class Picture extends SimplePicture
       x = Math.max(0,x);
       y = Math.max(0,y);
 
-      int endY = Math.min(y, background.getHeight());
-      int endX = Math.min(x, background.getWidth());
 
+//  System.out.println("background width=" + background.getWidth());
+  //  System.out.println("background height=" + background.getHeight());
       for( int i = 0; i < this.getWidth() && i + x < background.getWidth(); i++ ){
         for(int j = 0; j < this.getHeight()&& j + y < background.getHeight(); j++){
           int backgroundX = i + x;
           int backgroundY = j + y;
+      //    System.out.println("backgroundX=" + backgroundX );
+      //    System.out.println("backgroundY=" + backgroundY);
             Pixel sourcePixel = this.getPixel(i,j);
+          //  System.out.println("picX=" + i);
+        //    System.out.println("picY=" + j);
+
             int sourceRed = sourcePixel.getRed();
             int sourceGreen = sourcePixel.getGreen();
             int sourceBlue = sourcePixel.getBlue();
@@ -129,17 +134,18 @@ public class Picture extends SimplePicture
 
 
 
-             targetRed = (int)(( alphaSource / 255 * sourceRed ) + ((1 - alphaSource) / 255 ) * targetRed);
-             targetGreen = (int)((alphaSource / 255 * sourceGreen) + (( 1 - alphaSource)/255) * targetGreen);
-             targetBlue = (int) ((alphaSource / 255 * sourceBlue) + ((1 - alphaSource)/ 255) * targetBlue);
+             targetRed = (int)(( alphaSource / 255 * sourceRed ) + ((1 - (alphaSource) / 255 )) * targetRed);
+             targetGreen = (int)((alphaSource / 255 * sourceGreen) + (( 1 - (alphaSource)/255)) * targetGreen);
+             targetBlue = (int) ((alphaSource / 255 * sourceBlue) + ((1 - (alphaSource)/ 255)) * targetBlue);
 
             targetPixel.setRed(targetRed);
             targetPixel.setGreen(targetGreen);
             targetPixel.setBlue(targetBlue);
 
-            sourcePixel.setRed(targetRed);
-            sourcePixel.setGreen(targetGreen);
-            sourcePixel.setBlue(targetBlue);
+
+          //  sourcePixel.setRed(targetRed);
+          //  sourcePixel.setGreen(targetGreen);
+          //  sourcePixel.setBlue(targetBlue);
 
 
     }
