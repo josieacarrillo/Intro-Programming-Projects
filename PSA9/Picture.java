@@ -105,14 +105,15 @@ public class Picture extends SimplePicture
     public void alphaBlending(int x, int y, Picture background)
     {
 
-      x = Math.max(0,x);
-      y = Math.max(0,y);
+
 
 
 //  System.out.println("background width=" + background.getWidth());
   //  System.out.println("background height=" + background.getHeight());
-      for( int i = 0; i < this.getWidth() && i + x < background.getWidth(); i++ ){
-        for(int j = 0; j < this.getHeight()&& j + y < background.getHeight(); j++){
+
+      for( int i = 0; i < this.getWidth()&&  i + x < background.getWidth(); i++ ){
+        for(int j = 0; j < this.getHeight()&&  j + y < background.getHeight(); j++){
+          if(i+ x >= 0 && j + y >= 0){
           int backgroundX = i + x;
           int backgroundY = j + y;
       //    System.out.println("backgroundX=" + backgroundX );
@@ -146,7 +147,7 @@ public class Picture extends SimplePicture
           //  sourcePixel.setRed(targetRed);
           //  sourcePixel.setGreen(targetGreen);
           //  sourcePixel.setBlue(targetBlue);
-
+        }
 
     }
   }
