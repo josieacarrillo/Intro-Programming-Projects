@@ -157,6 +157,7 @@ public class Body {
      */
     public int centerXToPixelPosition()
     {
+
         int xPosition = (int)Math.floor((this.getXPosition()/universeSize) * CANVAS_WIDTH);
         return xPosition;
     }
@@ -168,6 +169,7 @@ public class Body {
      */
     public int centerYToPixelPosition()
     {
+
         int yPosition = (int)Math.floor((this.getYPosition()/universeSize) * CANVAS_HEIGHT);
         return yPosition;
     }
@@ -192,13 +194,38 @@ public class Body {
     public void draw(Picture universe)
     {
 
-      this.setXToPixelPosition(this.getXPosition()-image.getWidth()/2);
-      this.setYToPixelPosition(this.getYPosition()-image.getHeight()/2);
-      image.alphaBlending(this.centerXToPixelPosition(),this.centerYToPixelPosition(),universe);
 
+
+    //  System.out.println("universeWidth=" + universe.getWidth());
+
+    image.alphaBlending(centerXToPixelPosition()-image.getWidth()/2,centerYToPixelPosition()-image.getHeight()/2,universe);
+
+
+    //  System.out.println("xPos=" + (image.getWidth()/2-this.getXPosition()));
+    //  System.out.println("ypos=" + (image.getHeight()/2-this.getYPosition()));
 
     }
+    public static void main (String[] args)
+    {
+      Body.universeSize = 1000;
 
+        Picture planet = new Picture("earth.png");
+      Body body = new Body(0,0,10,10,20,planet);
+
+
+
+      Picture universe = new Picture("background.jpg");
+
+      body.draw(universe);
+      universe.explore();
+
+      System.out.println("xPos="+body.getXPosition());
+      System.out.println("yPos"+body.getYPosition());
+      System.out.println("body width="+ planet.getWidth());
+      System.out.println("body height="+ planet.getHeight());
+      System.out.println("centerXToPixelPosition="+ body.centerXToPixelPosition());
+      System.out.println("centerYToPixelPosition=" + body.centerYToPixelPosition());
+    }
     /**
      * Serialize this planet such that it can be read and converted to a planet
      * object from a text file.
