@@ -33,7 +33,7 @@ public class NBody {
         Body[] bodies = reader.getPlanets();
         double totalTime = reader.getTotalTime();
 
-        drawBodies(bodies, universe, background);
+
     }
 
     /**
@@ -43,11 +43,18 @@ public class NBody {
     */
     public static void moveBodies(Body[] bodies) {
       for(int i = 0; i < bodies.length; i++){
-        Body body = bodies[i].getBody;
-         body.updateVelocity();
+        for (int i =1; i < bodies.length; j++){
+
+        Body body = bodies[i];
+        Body otherBody = bodies[i+1];
+        body.updateVelocity(otherBody);
 
       }
+    }
+      for (int i = 0; i < bodies.length; i++){
+        bodies[i].move();
 
+      }
     }
 
     /**
@@ -61,7 +68,7 @@ public class NBody {
     public static void drawBodies(Body[] bodies, Picture universe,Picture background)
     {
             for(int i = 0; i < universe.getWidth(); i++){
-              for(int i = j; i <universe.getHeight(); j++){
+              for(int j = 0; i <universe.getHeight(); j++){
                 Pixel sourcePixel = background.getPixel(i,j);
                 int sourceRed = sourcePixel.getRed();
                 int sourceGreen = sourcePixel.getGreen();
@@ -71,8 +78,11 @@ public class NBody {
                 targetPixel.setRed(sourceRed);
                 targetPixel.setGreen(sourceGreen);
                 targetPixel.setBlue(sourceBlue);
+
+
               }
             }
+
 
 
     }
