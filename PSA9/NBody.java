@@ -43,18 +43,23 @@ public class NBody {
     */
     public static void moveBodies(Body[] bodies) {
       for(int i = 0; i < bodies.length; i++){
-        for (int i =1; i < bodies.length; j++){
+        for (int j =1; j < bodies.length; j++){
 
         Body body = bodies[i];
-        Body otherBody = bodies[i+1];
+
+        Body otherBody = bodies[j-i];
+
         body.updateVelocity(otherBody);
+       double distance = body.getDistance(otherBody);
+        System.out.println("distance=" + distance);
 
       }
     }
       for (int i = 0; i < bodies.length; i++){
-        bodies[i].move();
+      Body body =  bodies[i];
+      body.move();
 
-      }
+    }
     }
 
     /**
@@ -67,8 +72,8 @@ public class NBody {
     */
     public static void drawBodies(Body[] bodies, Picture universe,Picture background)
     {
-            for(int i = 0; i < universe.getWidth(); i++){
-              for(int j = 0; i <universe.getHeight(); j++){
+            for(int i = 0; i < background.getWidth() && i < universe.getWidth(); i++){
+              for(int j = 0; i < background.getHeight() && j < universe.getHeight(); j++){
                 Pixel sourcePixel = background.getPixel(i,j);
                 int sourceRed = sourcePixel.getRed();
                 int sourceGreen = sourcePixel.getGreen();
@@ -82,7 +87,11 @@ public class NBody {
 
               }
             }
-
+            for(int i = 0; i < bodies.length; i++ ){
+              Body body = bodies[i];
+              body.draw(universe);
+            }
+            universe.repaint();
 
 
     }
