@@ -42,15 +42,15 @@ public class NBody {
     * @param planets Array of all bodies in the system.
     */
     public static void moveBodies(Body[] bodies) {
-      for(int i = 0; i < bodies.length; i++){
-        for (int j =1; j < bodies.length; j++){
+      for(int j = 0; j < bodies.length; j++){
+        for (int i = j +1 ; i < bodies.length ; i++){
 
         Body body = bodies[i];
 
-        Body otherBody = bodies[j-i];
+        Body otherBody = bodies[j];
 
         body.updateVelocity(otherBody);
-       double distance = body.getDistance(otherBody);
+        double distance = body.getDistance(otherBody);
         System.out.println("distance=" + distance);
 
       }
